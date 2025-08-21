@@ -1,25 +1,16 @@
 # LR
+Elk van de volgende drie functies correspondeert met een .py-file in deze repository.
 
-1. maak een selectie van weetdata volgens dit selectiecriterium: enkel koppels meetdata die voor het eerst voorkomen in de lijst, blijven behouden.
-De methode die kies_functie kiest van elke waarde het eerste unieke voorkomen
+1. kies_functie maakt een selectie van meetdata. De functie geeft een lijst terug van de indices die corresponderen met unieke koppels in de gegeven dataset.
+nadeel: de selectie is niet uniek. Er kunnen andere selecties bestaan met evenveel elementen, maar vermoedelijk niet met meer elementen (ik heb het nog niet sluitend kunnen aantonen).
 
-voordelen:
-  - ...
-
-nadelen:
-  - ...
-
-3. vind de verdeling met het grootst aantal intervallen, zodat de gemiddelde LR binnen het interval steeds kleiner is dan die in het vorige interval
-Code voor dit deel vind je in kleinste_interval_backtracking. Het idee het volgende: controleer alle mogelijke intervallen binnen de getrimde lijst waarvoor de LR daalt, en kies de verdeling het met meeste intervallen.
-
-voordelen:
-  - alle verdelingen worden overlopen
-  - ...
-
+2. kleinste_interval_backtracking vindt de verdeling met het grootst aantal intervallen, zodat de gemiddelde LR binnen het interval steeds kleiner is dan die in het vorige interval.
+Controleer met brute kracht alle mogelijke intervallen binnen de getrimde lijst waarvoor de LR daalt, en kies de verdeling het met meeste intervallen. Gezien de exponentiële tijdscomplexiteit, zoekt het algoritme enkel naar intervallen die maximaal 7 indices groot zijn.
 nadelen:
   - duurt lang,
+  - niet alle intervallen worden overlopen (max 7 breed).
   - de verdeling is niet noodzakelijk gelijk verdeeld.
 
-5. schrijf de gevonden resultaten naar excel in to_excel.
+3. schrijf de gevonden resultaten naar excel in to_excel.
 
 ZIE AFZONDERLIJKE FUNCTIES VOOR MEER UITLEG
