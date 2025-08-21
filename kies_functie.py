@@ -1,3 +1,11 @@
+import numpy as np
+
+from versie3.trimmen import FPR_getrimt
+
+FPR = np.loadtxt('FPR.txt', delimiter=' ')
+TPR = np.loadtxt('TPR.txt', delimiter=' ')
+threshold = np.loadtxt('threshold.txt', delimiter=' ')
+
 def index_machine(lijst):
     '''
     :param lijst: een lijst getallen waar dubbels in staan
@@ -73,6 +81,8 @@ def trim(lijst1, goede_elementen):
 
 FPR_69 = trim(FPR, idx)
 TPR_69 = trim(TPR, idx)
+threshold_69 = trim(threshold, idx)
+print(threshold_69)
 
 #########################
 # CONTROLE              #
@@ -92,3 +102,9 @@ def verschil(lijst1):
 
 assert 0 not in verschil(FPR_69)
 assert 0 not in verschil(TPR_69)
+
+
+np.savetxt('FPR_getrimt.txt', FPR_69, delimiter=' ')
+np.savetxt('TPR_getrimt.txt', TPR_69, delimiter=' ')
+np.savetxt('threshold_getrimt.txt', threshold_69, delimiter=' ')
+
