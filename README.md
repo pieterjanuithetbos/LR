@@ -10,9 +10,9 @@ Controleer met brute kracht alle mogelijke intervallen binnen de getrimde lijst 
 
   _nadelen_:
   - duurt lang,
-  - niet alle intervallen worden overlopen (max 7 breed).
+  - niet alle intervallen worden overlopen (max 7 breed),
   - de verdeling is niet noodzakelijk gelijk verdeeld.
 
 3. schrijf de gevonden resultaten naar excel in to_excel.
 
-zie afzonderlijke functies voor meer uitleg.
+Zie afzonderlijke functies voor meer uitleg.
