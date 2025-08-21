@@ -14,6 +14,7 @@ FPR_getrimt = np.loadtxt('FPR_getrimt.txt', delimiter=' ')
 TPR_getrimt = np.loadtxt('TPR_getrimt.txt', delimiter=' ')
 threshold_getrimt = np.loadtxt('threshold_getrimt.txt', delimiter=' ')
 
+print(len(FPR_getrimt))
 # start = time.perf_counter()
 # print("FPR", FPR)
 # stop = time.perf_counter()
@@ -53,10 +54,16 @@ def likelihood_helper(FPR, TPR, start_idx, eind_idx):
 def extend(partial_solution, FPR, TPR, n, likelihood):
     ext_sol = []
     a = partial_solution[-1]
-    for getal in range(partial_solution[-1] + 1,n):
-        if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
-            new_sol = partial_solution + [getal]
-            ext_sol.append(new_sol)
+    if partial_solution[-1] < 55:
+        for getal in range(partial_solution[-1] + 1, min(partial_solution[-1] + 6, n)):
+            if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
+                new_sol = partial_solution + [getal]
+                ext_sol.append(new_sol)
+    else:
+        for getal in range(partial_solution[-1] + 1, min(partial_solution[-1] + 10, n)):
+            if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
+                new_sol = partial_solution + [getal]
+                ext_sol.append(new_sol)
     return ext_sol
 
 def examine(partial_solution, n):
@@ -87,8 +94,12 @@ def verdeling(FPR, TPR):
     partial_solution = [0]
     return solve(partial_solution, FPR, TPR)
 
-verd_20 = verdeling(FPR_getrimt, TPR_getrimt)
+
+start = time.perf_counter()
+verd_20 = verdeling(FPR_getrimt[:], TPR_getrimt[:])
 print("indices:", verd_20)
+stop = time.perf_counter()
+print("tijd", stop - start)
 
 def bereken_likelihood(FPR, TPR):
     likelihood_lijst = []
@@ -98,12 +109,12 @@ def bereken_likelihood(FPR, TPR):
         likelihood_lijst += [LR]
     return likelihood_lijst
 
-LR_20 = bereken_likelihood(FPR_getrimt, TPR_getrimt)
+LR_20 = bereken_likelihood(FPR_getrimt[:], TPR_getrimt[:])
 print("LR:", LR_20)
 
 
-thresh_20 = trim(threshold_getrimt, verd_20)
-print("thresh", thresh_20)
+thresh_20 = trim(threshold_getrimt[:], verd_20)
+# print("thresh", thresh_20)
 
 '''
 Kies de oplossing waarbij het laaste interval de laagste likelihood-ratio heeft.
@@ -126,4 +137,25 @@ Kies de oplossing waarbij het laaste interval de laagste likelihood-ratio heeft.
 # ax.set_xlabel("Threshold")
 # ax.set_ylabel("LR")
 # plt.show()
+
+#########################
+# SCHRIJF NAAR EXCEL    #
+#########################
+
+df1 = pd.DataFrame({
+    "FPR_getrimt": FPR_getrimt,
+    "TPR_getrimt": TPR_getrimt,
+    # "verschil_FPR": ["nan"] +verschil_FPR,
+    # "verschil_TPR": ["nan"] + verschil_TPR,
+    # "likelihood": ["nan"] + likelihood,
+    "threshold_getrimt_getrimt": threshold_getrimt}
+                   )
+df2 = pd.DataFrame({
+    "indices_intervallen": verd_20,
+    "likelihood_tussen_intervallen": ['inf'] + LR_20,
+    "thresholds_intervallen": thresh_20
+})
+with pd.ExcelWriter("getrimde_lijsten.xlsx") as writer:
+    df1.to_excel(writer, "getrimde_lijsten")
+    df2.to_excel(writer, "intervallen")
 
