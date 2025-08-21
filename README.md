@@ -6,7 +6,7 @@ Elk van de volgende functies correspondeert met een .py-file in deze repository.
   _nadeel_: de selectie is niet uniek. Er kunnen andere selecties bestaan met evenveel elementen, maar vermoedelijk niet met meer elementen (dat heb ik nog niet sluitend kunnen aantonen).
 
 2. kleinste_interval_backtracking vindt de verdeling met het grootst aantal intervallen, zodat de gemiddelde LR binnen het interval steeds kleiner is dan die in het vorige interval.
-Controleer met brute kracht alle mogelijke intervallen binnen de getrimde lijst waarvoor de LR daalt, en kies de verdeling het met meeste intervallen. Gezien de exponentiële tijdscomplexiteit, zoekt het algoritme enkel naar intervallen die maximaal 7 indices groot zijn.
+Controleert met brute kracht alle mogelijke intervallen binnen de getrimde lijst waarvoor de LR daalt, en kies de verdeling het met meeste intervallen. Gezien de exponentiële tijdscomplexiteit, zoekt het algoritme enkel naar intervallen die maximaal 7 indices groot zijn.
 
   _nadelen_:
   - duurt lang,
