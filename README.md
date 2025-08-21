@@ -15,4 +15,4 @@ Controleer met brute kracht alle mogelijke intervallen binnen de getrimde lijst 
 
 3. schrijf de gevonden resultaten naar excel in to_excel.
 
-ZIE AFZONDERLIJKE FUNCTIES VOOR MEER UITLEG
+zie afzonderlijke functies voor meer uitleg.
