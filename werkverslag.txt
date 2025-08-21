@@ -1,0 +1,13 @@
+0, 1, 2, 3, 9, 10, 11, 12, 13, 15, 19
+
+CCP Thermo Fisher	6 en 9			34.07282449999184	
+CCP Siemens 		8			145.69702780000807
+CCP Roche 		8			0.07636220000858884
+CCP Euroimmun 		/		
+CCP Abbott		8			2.458099499999662
+RF Thermo Fisher IgM	/		
+RF Siemens		9			269.864		
+RF Roche		8			0.09324789998936467
+RF Ortho		/
+RF Beckman Coulter	8			27.189262800005963
+RF Abbott		11			? (snel)
