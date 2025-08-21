@@ -1,5 +1,5 @@
 # LR
-Elk van de volgende drie functies correspondeert met een .py-file in deze repository.
+Elk van de volgende functies correspondeert met een .py-file in deze repository.
 
 1. kies_functie maakt een selectie van meetdata. De functie geeft een lijst terug van de indices die corresponderen met unieke koppels in de gegeven dataset.
 
@@ -12,7 +12,5 @@ Controleer met brute kracht alle mogelijke intervallen binnen de getrimde lijst 
   - duurt lang,
   - niet alle intervallen worden overlopen (max 7 breed),
   - de verdeling is niet noodzakelijk gelijk verdeeld.
-
-3. schrijf de gevonden resultaten naar excel in to_excel.
 
 Zie afzonderlijke functies voor meer uitleg.
