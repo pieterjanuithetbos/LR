@@ -1,8 +1,7 @@
 # LR
 
-De belangrijke stappen zijn:
 1. maak een selectie van weetdata volgens dit selectiecriterium: enkel koppels meetdata die voor het eerst voorkomen in de lijst, blijven behouden.
-De methode die kies_functie gebruikt is de volgende: ...
+De methode die kies_functie kiest van elke waarde het eerste unieke voorkomen
 
 voordelen:
   - ...
