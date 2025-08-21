@@ -6,6 +6,7 @@ De methode die kies_functie gebruikt is de volgende: ...
 
 voordelen:
   - ...
+
 nadelen:
   - ...
 
@@ -14,7 +15,8 @@ Code voor dit deel vind je in kleinste_interval_backtracking. Het idee het volge
 
 voordelen:
   - alle verdelingen worden overlopen
-  - 
+  - ...
+
 nadelen:
   - duurt lang,
   - de verdeling is niet noodzakelijk gelijk verdeeld.
