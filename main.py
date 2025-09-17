@@ -2,14 +2,20 @@ import pandas as pd
 import time
 import numpy as np
 
+#################
+# TPR is y-as   #
+# FPR is x-as   #
+#################
+
 # VUL IN
-naam = 'CCP Euroimmun'
-b1 = 6
-b2 = 11
-b3 = 9
+naam = 'BioFlash tTG'
+b1 = 8
+# b2 = 11
+# b3 = 11
 
 # gebruik index_col=0 om de ID's van de rijen zoals weergegeven in excel te gebruiken
-df = pd.read_excel('excel_sheet.xlsx', sheet_name=naam, index_col=0)
+# LEES EXCEL
+df = pd.read_excel('input_derde_versie_tTG.xlsx', sheet_name=naam, index_col=0)
 
 FPR = df['FPR']
 TPR = df['TPR']
@@ -80,6 +86,7 @@ def kies_indices(lijst1, lijst2):
 
 idx = kies_indices(index_FPR, index_TPR)
 print("Het aantal weerhouden koppels bedraagt:", len(idx))
+print("De indices zijn:", idx)
 
 def trim(lijst1, goede_elementen):
     '''
@@ -133,25 +140,21 @@ def likelihood_helper(FPR, TPR, start_idx, eind_idx):
 def extend(partial_solution, FPR, TPR, n, likelihood):
     ext_sol = []
     a = partial_solution[-1]
-    if a < 30:
+    if True:
         for getal in range(a + 1, min(a + b1, n)):
             if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
                 new_sol = partial_solution + [getal]
                 ext_sol.append(new_sol)
-    if 30 < a < 70:
-        for getal in range(a + 1, min(a + b2, n)):
-            if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
-                new_sol = partial_solution + [getal]
-                ext_sol.append(new_sol)
-    if 70 < a < 110:
-        for getal in range(a + 1, min(a + b3, n)):
-            if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
-                new_sol = partial_solution + [getal]
-                ext_sol.append(new_sol)
-        for getal in range(a + 1, min(a + b3, n)):
-            if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
-                new_sol = partial_solution + [getal]
-                ext_sol.append(new_sol)
+    # if 30 < a < 70:
+    #     for getal in range(a + 1, min(a + b2, n)):
+    #         if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
+    #             new_sol = partial_solution + [getal]
+    #             ext_sol.append(new_sol)
+    # if 70 < a < 110:
+    #     for getal in range(a + 1, min(a + b3, n)):
+    #         if likelihood_helper(FPR, TPR, a, getal) < likelihood: # als de likelihood afneemt
+    #             new_sol = partial_solution + [getal]
+    #             ext_sol.append(new_sol)
     return ext_sol
 
 def examine(partial_solution, n):
@@ -192,9 +195,9 @@ def bereken_likelihood(FPR, TPR):
 
 start = time.perf_counter()
 verd_20 = verdeling(FPR_getrimt[:], TPR_getrimt[:])
+stop = time.perf_counter()
 print("Het aantal gevonden indices bedraagt:", len(verd_20))
 
-stop = time.perf_counter()
 print("tijd om de indices te berekenen:", stop - start)
 
 LR_20 = bereken_likelihood(FPR_getrimt[:], TPR_getrimt[:])
@@ -221,22 +224,22 @@ thresh_20 = trim(threshold_getrimt[:], verd_20)
 # SCHRIJF NAAR EXCEL    #
 #########################
 
-# df3 = pd.DataFrame({
-#     "FPR_getrimt": FPR_getrimt,
-#     "TPR_getrimt": TPR_getrimt,
-#     # "verschil_FPR": ["nan"] +verschil_FPR,
-#     # "verschil_TPR": ["nan"] + verschil_TPR,
-#     # "likelihood": ["nan"] + likelihood,
-#     "threshold_getrimt_getrimt": threshold_getrimt}
-#                    )
-# df4 = pd.DataFrame({
-#     "indices_intervallen": verd_20,
-#     "likelihood_tussen_intervallen": ['inf'] + LR_20,
-#     "thresholds_intervallen": thresh_20
-# })
-# with pd.ExcelWriter("getrimde_lijsten.xlsx", mode='a') as writer:
-#     df3.to_excel(writer, "getrimde_lijsten " + naam)
-#     df4.to_excel(writer, "intervallen " + naam)
+df3 = pd.DataFrame({
+    "FPR_getrimt": FPR_getrimt,
+    "TPR_getrimt": TPR_getrimt,
+    # "verschil_FPR": ["nan"] +verschil_FPR,
+    # "verschil_TPR": ["nan"] + verschil_TPR,
+    # "likelihood": ["nan"] + likelihood,
+    "threshold_getrimt_getrimt": threshold_getrimt}
+                   )
+df4 = pd.DataFrame({
+    "indices_intervallen": verd_20,
+    "thresholds_intervallen": thresh_20,
+    "likelihood_tussen_intervallen": ['inf'] + LR_20
+})
+with pd.ExcelWriter("tTG_lijsten.xlsx", mode='a') as writer:
+    df3.to_excel(writer, "getrimde_lijsten " + naam)
+    df4.to_excel(writer, "intervallen " + naam)
 
 
 
