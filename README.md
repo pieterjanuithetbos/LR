@@ -1,4 +1,4 @@
-# Vastleggen van intervallen met steeds stijgende LR
+# LR-project
 
 ## Doel van het programma
 Voor een grafiek van de sensitiveit in functie van de specificiteit (ook wel ROC curve), valt de LR interpreteren als een richtingsafgeleide. Voor een 'perfecte' ROC curve is de richtingsafgeleide steeds dalend. 
