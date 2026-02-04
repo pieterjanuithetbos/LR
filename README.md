@@ -27,7 +27,7 @@ Er zijn enkele essentiële randvoorwaarden:
 
   De indexmachine krijgt als parameter een lijst mee en geeft een even lange lijst terug. De uitvoer bevat op elke positie de index van het laatst voorgekomen _unieke_ element op de corresponderende positie in de opgegeven lijst. 
 
-  De gemaakte selectie is #highlight[niet uniek].
+  De gemaakte selectie is *niet uniek*
 
 + `kies_indices`
   
@@ -35,16 +35,16 @@ Er zijn enkele essentiële randvoorwaarden:
 
 + `trim`
 
-  Deze functie krijgt als invoer twee lijsten: een invoerlijst en een lijst met zinvolle indices. De uitvoer is een verkorte versie van de invoerlijst, die enkel de elementen op de opgegeven indices weerhoudt.
+Deze functie krijgt als invoer twee lijsten: een invoerlijst en een lijst met zinvolle indices. De uitvoer is een verkorte versie van de invoerlijst, die enkel de elementen op de opgegeven indices weerhoudt.
 
 ## Backtracking
 + extend
 
-  Breidt de partiële oplossing uit tot nieuwe oplossingen, maar stelt nooit intervallen voor die groter zijn dan de ingestelde maximale breedte.
+Breidt de partiële oplossing uit tot nieuwe oplossingen, maar stelt nooit intervallen voor die groter zijn dan de ingestelde maximale breedte.
   
 + examine
 
-  Geeft aan dat de oplossing volledig is wanneer de laatste index in de partiële oplossing gelijk is aan het laatste datapunt. Zowel het eerste als het laatste datapunt moeten dus in de oplossing zitten, wat een #underline[belangrijke beperking] is!
+  Geeft aan dat de oplossing volledig is wanneer de laatste index in de partiële oplossing gelijk is aan het laatste datapunt. Zowel het eerste als het laatste datapunt moeten dus in de oplossing zitten, wat een belangrijke beperking is!
   
 + solve
 
@@ -56,4 +56,8 @@ Er zijn enkele essentiële randvoorwaarden:
 
   Gegeven de sensitiviteit en de specificiteit, samen met een startindex en een eindindex, berekent `likelihood_helper` de de richtingsafgeleide over het interval bepaald door de start- en eindindex.
 
-+ `bereken_likelihood` 
++ `bereken_likelihood`
+
+Deze functie berekent de LR tussen de gevonden intervallen en geeft ze terug in lijstvorm, in de volgorde waarin de intervallen voorkomen.
+
+Verder geeft het programma een lijst met de thresholds die overeenkomen met de indices die de gevonden intervallen definiëren. De lijst met thresholds telt dus één element meer dan de lijst met LR's.
