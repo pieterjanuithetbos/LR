@@ -1,23 +1,29 @@
 # Vastleggen van intervallen met steeds stijgende LR
 
 ## Doel van het programma
-De invoer is (i) specificiteit (FPR), (ii) sensitiviteit (TPR) en de (iii) gekoppelde thresholds. 
+Voor een grafiek van de sensitiveit in functie van de specificiteit (ook wel ROC curve), valt de LR interpreteren als een richtingsafgeleide. Voor een 'perfecte' ROC curve is de richtingsafgeleide steeds dalend. 
 
-Voor een grafiek van de sensitiveit in functie van de specificiteit (ook wel ROC curve), valt de LR interpreteren als een **richtingsafgeleide**. Aangezien het moeilijk is om een continue fit te vinden voor de meetdata, kunnen we de richtingsafgeleide enkel benaderend berekenen als de gemiddelde richtingsafgeleide over een inverval. 
+De bedoeling van dit programmaatje is om een selectie te maken uit de meetdata, zodat de **LR** (richtingsafgeleide) voor de weerhouden intervallen **steeds daalt**. 
 
-Voor een 'perfecte' ROC curve is de richtingsafgeleide steeds dalend. De bedoeling van dit programmaatje is om een selectie te maken uit de meetdata, zodat de LR (richtingsafgeleide) voor de weerhouden intervallen steeds daalt. 
-
-De implementatie zal de data echter 'achterstevoren' lezen en een steeds stijgende LR zoeken. Zo vermijdt het dat negatieve LR's ook toegelaten worden.
+De implementatie zal de data echter '**achterstevoren**' lezen en een steeds stijgende LR zoeken. Zo vermijden we dat negatieve LR's ook toegelaten worden.
 
 
 ## Randvoorwaarden
 
 Er zijn enkele essentiële randvoorwaarden:
-- In elke verdeling komt de het eerste én laatste element van de meetdata voor,
-- de maximaal onderzochte breedte van intervallen is geplafonneerd: in sommige gevallen zijn ze hoogstens 8 breed, in andere hoogstens 11 (dat wil zeggen dat het eind punt maximaal 11 stapjes verwijderd is van het beginpunt).
-- 'fijnste verdeling' is hier geïnterpreteerd als 'verdeling met het grootste aantal intervallen'.
-- het programmaatje past het backtracking-algoritme toe, dat voor grote datasets extreem traag is. Dat is meteen de praktische verklaring voor de limiet op intervalbreedtes.
-- het is niet noodzakelijk zo dat de gevonden verdeling gelijkmatig verspreid is.
+- In elke verdeling komt de het **eerste én laatste element** van de meetdata voor,
+- de maximaal onderzochte **breedte** van intervallen is **geplafonneerd**,
+- '**fijnste** verdeling' is hier geïnterpreteerd als 'verdeling met het **grootste aantal intervallen**'.
+- het programmaatje past een **backtracking**-algoritme toe. Dat betekent: **exponentiële tijdscomplexiteit**.
+- het is **niet** noodzakelijk zo dat de gevonden verdeling **gelijkmatig** verspreid is.
+
+### invoerdata:
+
+1. specificiteit (FPR),
+2. sensitiviteit (TPR) en de
+3. gekoppelde thresholds
+4. totaal aantal besmette en niet-besmette patiënten
+
 
 
 ## Opbouw van de code
@@ -25,9 +31,9 @@ Er zijn enkele essentiële randvoorwaarden:
 
 + `indexmachine`
 
-  De indexmachine krijgt als parameter een lijst mee en geeft een even lange lijst terug. De uitvoer bevat op elke positie de index van het laatst voorgekomen _unieke_ element op de corresponderende positie in de opgegeven lijst. 
+De indexmachine krijgt als parameter een lijst mee en geeft een even lange lijst terug. Elk element van de lijst correspondeert met de index van het laatst voorgekomen unieke element in de opgegeven lijst. 
 
-  De gemaakte selectie is *niet uniek*
+De gemaakte selectie is *niet uniek*. Wanneer een element bv. vier keer na elkaar voorkomt, zal de indexmachine de index van het eerste voorkomen vier keer weergeven.
 
 + `kies_indices`
   
