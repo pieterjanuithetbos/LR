@@ -1,14 +1,13 @@
 # Vastleggen van intervallen met steeds stijgende LR
-## Introductie
-
-Onderstaand documentje biedt een kort overzicht van de werking van `main.py`.
 
 ## Doel van het programma
 De invoer is (i) specificiteit (FPR), (ii) sensitiviteit (TPR) en de (iii) gekoppelde thresholds. 
 
-Voor een grafiek van de sensitiveit in functie van de specificiteit (ook wel ROC curve), valt de LR interpreteren als een richtingsafgeleide. Aangezien het moeilijk is om een continue fit te vinden voor de meetdata, kunnen we de richtingsafgeleide enkel benaderend berekenen als de gemiddelde richtingsafgeleide over een inverval. 
+Voor een grafiek van de sensitiveit in functie van de specificiteit (ook wel ROC curve), valt de LR interpreteren als een **richtingsafgeleide**. Aangezien het moeilijk is om een continue fit te vinden voor de meetdata, kunnen we de richtingsafgeleide enkel benaderend berekenen als de gemiddelde richtingsafgeleide over een inverval. 
 
-Voor een 'perfecte' ROC curve is de richtingsafgeleide steeds dalend. De bedoeling van dit programmaatje is om een selectie te maken uit de meetdata, zodat de LR (richtingsafgeleide) voor de weerhouden intervallen steeds daalt.
+Voor een 'perfecte' ROC curve is de richtingsafgeleide steeds dalend. De bedoeling van dit programmaatje is om een selectie te maken uit de meetdata, zodat de LR (richtingsafgeleide) voor de weerhouden intervallen steeds daalt. 
+
+De implementatie zal de data echter 'achterstevoren' lezen en een steeds stijgende LR zoeken. Zo vermijdt het dat negatieve LR's ook toegelaten worden.
 
 
 ## Randvoorwaarden
@@ -58,50 +57,3 @@ Er zijn enkele essentiële randvoorwaarden:
   Gegeven de sensitiviteit en de specificiteit, samen met een startindex en een eindindex, berekent `likelihood_helper` de de richtingsafgeleide over het interval bepaald door de start- en eindindex.
 
 + `bereken_likelihood` 
-
-  Deze functie berekent de LR tussen de gevonden intervallen en geeft ze terug in lijstvorm, in de volgorde waarin de intervallen voorkomen.
-
-Verder geeft het programma een lijst met de thresholds die overeenkomen met de indices die de gevonden intervallen definiëren. De lijst met thresholds telt dus #text(fill: red, [één element]) meer dan de lijst met LR's.
-#pagebreak()
-
-## Wat meer over de uitvoer
-### Excel
-
-Op het einde schrijft het programma volgende resultaten naar excel:
-- tabblad 1: 
-  de getrimde lijsten van 
-  + sensitiviteit, 
-  + specificiteit en 
-  + thresholds.
-- tabblad 2:
-  + de indices die de intervallen definiëren,
-  + de thresholds die de intervallen definiëren,
-  + `inf`, gevolgd door de LR's tussen de intervallen (`inf` om ervoor te zorgen dat alle lijsten even lang zijn).
-
-## Kanttekeningen
-
-De inleiding vermeldt dat de het programmaatje een verdeling zoekt waarvoor de LR (richtingsafgeleide) steeds daalt. 'Maar wat als ze negatief wordt, en de ROC-curve begint te dalen?', zal de oplettende lezer zich afvragen. Toch is dat geen probleem.
-
-De verklaring is dat de invoerlijsten de data weergeven van hoge naar lage threshold. Lage TPR- en FPR-waarden komen overeen met hoge thresholds en vice versa. Dus als je de grafiek van TPR in functie van FPR van hoge naar lage threshold wil lezen, moet je dat van rechts naar links doen. 
-
-Het programmaatje krijgt de data 'achterstevoren' binnen en leest de data dus effectief van rechts naar links. Het zoekt een verdeling zodat de LR steeds groter wordt.
-
-Een mogelijke manier om de uitvoer de visualiseren, is om de LR als functie van de threshold te plotten. We moeten ons ervan bewust zijn dat de thresholds dan wél van klein naar groot gaan. De curve van LR in functie van threshold is stijgend, niet dalend.
-
-
-
-Elk van de volgende functies correspondeert met een .py-file in deze repository.
-
-1. kies_functie maakt een selectie van meetdata. De functie geeft een lijst terug van de indices die corresponderen met unieke koppels in de gegeven dataset.
-
-  _nadeel_: de selectie is niet uniek. Er kunnen andere selecties bestaan met evenveel elementen, maar vermoedelijk niet met meer elementen (dat heb ik nog niet sluitend kunnen aantonen).
-
-2. kleinste_interval_backtracking vindt de verdeling met het grootst aantal intervallen, zodat de gemiddelde LR binnen het interval steeds kleiner is dan die in het vorige interval.
-Controleert met brute kracht alle mogelijke intervallen binnen de getrimde lijst waarvoor de LR daalt, en kies de verdeling het met meeste intervallen. Gezien de exponentiële tijdscomplexiteit, zoekt het algoritme enkel naar intervallen die maximaal 7 indices groot zijn.
-
-  _nadelen_:
-  - duurt lang,
-  - niet alle intervallen worden overlopen (max 7 breed),
-  - de verdeling is niet noodzakelijk gelijk verdeeld.
-
-Zie afzonderlijke functies voor meer uitleg.
